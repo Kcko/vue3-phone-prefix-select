@@ -3,15 +3,17 @@ Vue3 phone prefix select component with country name and emoji flag.
 
 ## How to
 
-Copy files then
-
 ```js
 <script>
   import PrefixSelect from '@/components/form/prefix/PrefixSelect.vue'
+  
+  const prefix_selected = ref(48)
 </script>
 
-<template>
-  <PrefixSelect label="Prefix" :selected="48" name="prefix" />
+<template>  
+  <PrefixSelect label="Prefix code" v-model="prefix_selected" name="prefix" />
+  
+  <p> Prefix: {{ prefix_selected }}
 </template>
 ```
 
