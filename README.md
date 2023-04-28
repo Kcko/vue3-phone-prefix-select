@@ -14,3 +14,7 @@ Copy files then
   <PrefixSelect label="Prefix" :selected="48" name="prefix" />
 </template>
 ```
+
+## Select image
+
+<img src="https://raw.githubusercontent.com/atomjoy/vue3-phone-prefix-select/main/vue3-phone-prefix.png" width="100%">
