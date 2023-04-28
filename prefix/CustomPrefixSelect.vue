@@ -3,7 +3,6 @@
 	<div class="custom-select" @blur="open = false" :tabindex="tabindex">
 		<div class="selected" :class="{ open: open, inactive: inactive }" @click="open = !open">{{ selected }} <i class="fas fa-caret-down selected-icon"></i></div>
 		<div ref="items" class="items" :class="{ selectHide: !open }">
-			<div :key="null" @click="updateClick(null)">{{ placeholder }}</div>
 			<div v-for="o of options" :key="o.prefix" :value="o.prefix" @click="updateClick(o)">{{ o.name }} {{ o.emoji }} +{{ o.prefix }}</div>
 		</div>
 		<input ref="input" type="hidden" v-model="modelValue" :name="name" />
@@ -20,19 +19,17 @@ const props = defineProps({
 	name: { type: String },
 	modelValue: { type: String },
 	tabindex: { type: Number, default: 0 },
-	placeholder: { type: String, default: 'Choose' },
 })
-
-let { label, name, modelValue, tabindex, placeholder } = toRefs(props)
+let { label, name, modelValue, tabindex } = toRefs(props)
 const input = ref(null)
 const selected = ref(null)
 const inactive = ref(false)
 const open = ref(false)
 
 function clear() {
-	selected.value = placeholder.value
-	modelValue.value = null
-	inactive.value = true
+	selected.value = `${options[0].emoji}  +${options[0].prefix}`
+	modelValue.value = options[0].prefix
+	inactive.value = false
 }
 
 onMounted(() => {
