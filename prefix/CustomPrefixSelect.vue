@@ -22,32 +22,39 @@ const props = defineProps({
 	tabindex: { type: Number, default: 0 },
 	placeholder: { type: String, default: 'Choose' },
 })
+
 let { label, name, modelValue, tabindex, placeholder } = toRefs(props)
 const input = ref(null)
 const selected = ref(null)
 const inactive = ref(false)
 const open = ref(false)
 
+function clear() {
+	selected.value = placeholder.value
+	modelValue.value = null
+	inactive.value = true
+}
+
 onMounted(() => {
 	if (modelValue.value !== null) {
-		let code = options?.prefix?.find((option) => option.prefix === modelValue.value)?.prefix
-		selected.value = code != null ? `+${prefix}` : null ?? `+${modelValue.value}`
+		let option = options?.find((option) => parseInt(option.prefix) === modelValue.value)
+		if (option?.prefix) {
+			selected.value = `${option.emoji}  +${option.prefix}`
+		} else {
+			clear()
+		}
 	} else {
-		selected.value = placeholder.value
-		inactive.value = true
-		modelValue.value = null
+		clear()
 	}
 })
 
 function updateClick(option = null) {
 	if (option == null) {
-		modelValue.value = null
-		selected.value = placeholder.value
-		inactive.value = true
+		clear()
 		open.value = false
 	} else {
 		modelValue.value = option.prefix ?? null
-		selected.value = `+${option.prefix}`
+		selected.value = `${option.emoji}  +${option.prefix}`
 		inactive.value = false
 		open.value = false
 	}
